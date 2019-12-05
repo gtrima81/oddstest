@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import oddtest.apigenerated.OddsApi;
 import oddtest.apigenerated.model.Odds;
 import oddtest.service.OddsService;
-import oddtest.validator.PostRequestBodyValidator;
+import oddtest.validator.OddsValidator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -20,11 +20,11 @@ import java.util.List;
 public class OddApiImpl implements OddsApi {
 
     private final OddsService oddsService;
-    private final PostRequestBodyValidator[] postRequestBodyValidators;
+    private final OddsValidator oddsValidator;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.addValidators(postRequestBodyValidators);
+        binder.addValidators(oddsValidator);
     }
 
     @Override
@@ -33,9 +33,9 @@ public class OddApiImpl implements OddsApi {
     }
 
     @Override
-    public ResponseEntity<Void> oddsPost(@RequestBody @Valid Odds body) {
+    public ResponseEntity<Void> oddsPost(@RequestBody @Valid Odds odds) {
         // submit the odd
-        oddsService.saveOdd(body.getUserId(), body.getBetId(), body.getOdds());
+        oddsService.saveOdd(odds.getUserId(), odds.getBetId(), odds.getOdds());
         return ResponseEntity.noContent().build();
     }
 }
