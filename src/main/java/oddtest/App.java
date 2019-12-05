@@ -1,4 +1,4 @@
-package oddtest.services.com;
+package oddtest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
