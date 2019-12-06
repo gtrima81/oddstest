@@ -5,6 +5,7 @@ import oddtest.apigenerated.OddsApi;
 import oddtest.apigenerated.model.Odds;
 import oddtest.service.OddsService;
 import oddtest.validator.OddsValidator;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -33,9 +34,9 @@ public class OddApiImpl implements OddsApi {
     }
 
     @Override
-    public ResponseEntity<Void> oddsPost(@RequestBody @Valid Odds odds) {
+    public ResponseEntity<Void> oddsPost(@Valid Odds odds) {
         // submit the odd
         oddsService.saveOdd(odds.getUserId(), odds.getBetId(), odds.getOdds());
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
